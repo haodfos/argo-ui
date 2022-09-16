@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { DataLoader } from '../data-loader';
 import { Toolbar, TopBar } from '../top-bar/top-bar';
 import { Utils } from '../utils';
+import {shouldHide} from '../kiosk';
 
 require('./page.scss');
 
@@ -23,7 +24,7 @@ export interface PageContextProps {
 export const PageContext = React.createContext<PageContextProps>({ title: 'Argo' });
 
 export const Page = (props: PageProps) => {
-    const toolbarObservable = props.toolbar && Utils.toObservable(props.toolbar);
+    const toolbarObservable = shouldHide(location) ? null : (props.toolbar && Utils.toObservable(props.toolbar));
 
     return (
         <div className={classNames('page', { 'page--has-toolbar': !!props.toolbar })}>

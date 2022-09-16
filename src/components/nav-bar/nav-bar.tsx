@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { AppContext } from '../../context';
 import {Tooltip} from '../tooltip/tooltip';
-import {shouldHide} from './kiosk';
+import {shouldHide} from '../kiosk';
 
 require('./nav-bar.scss');
 
