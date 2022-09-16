@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { AppContext } from '../../context';
 import {Tooltip} from '../tooltip/tooltip';
+import {shouldHide} from './kiosk';
 
 require('./nav-bar.scss');
 
@@ -15,7 +16,6 @@ export interface NavBarProps {
 
 export interface NavBarStyle {
     backgroundColor?: string;
-    display?: string;
 }
 
 export function isActiveRoute(locationPath: string, path: string) {
@@ -23,10 +23,12 @@ export function isActiveRoute(locationPath: string, path: string) {
 }
 
 export const NavBar: React.FunctionComponent<NavBarProps> = (props: NavBarProps, context: AppContext) => {
+    if (shouldHide(location)) {
+        return null;
+    }
     const locationPath = context.router.route.location.pathname;
     const navBarStyle = {
         ...(props.style?.backgroundColor && {background: `linear-gradient(to bottom, ${props.style?.backgroundColor}, #999`}),
-        ...(props.style?.display && { display: `${props.style?.display}` })
     };
     return (
         <div className={classNames('nav-bar', {
