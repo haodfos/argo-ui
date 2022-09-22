@@ -36,14 +36,11 @@ function tryDecodeURIComponent(value: string): string | undefined {
 }
 
 export function shouldHide(location: any) {
-  let queryParams = {};
+  let queryParams: any = {};
   try {
       const { searchParams } = new URL(location.href);
-      // @ts-ignore
-      for (const [key, value] of searchParams) {
-        // @ts-ignore
-        queryParams[key] = value !== '' ? tryDecodeURIComponent(value as string) : true;
-      }
+      const kiosk = searchParams.get('kiosk');
+      queryParams.kiosk = kiosk !== '' ? tryDecodeURIComponent(kiosk as string) : true;
   } catch(e) {
       console.log('new URL error: ', e);
   }
